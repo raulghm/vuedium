@@ -20,7 +20,7 @@ yarn run build --report
 
 ## WIP
 
-- [x] List posts
-- [] Create post
-- [] Edit post
-- [] Delete post
+* [x] List posts
+* [ ] Create post
+* [ ] Edit post
+* [ ] Delete post
