@@ -2,6 +2,8 @@
 
 > Simple Medium clone made with Vue
 
+<img src="https://github.com/raulghm/vuedium/blob/master/screenshot.jpg" alt="vuedium"/>
+
 ## Build Setup
 
 ``` bash
@@ -20,7 +22,7 @@ yarn run build --report
 
 ## WIP
 
-- [x] List posts
-- [] Create post
-- [] Edit post
-- [] Delete post
+* [x] List posts
+* [ ] Create post
+* [ ] Edit post
+* [ ] Delete post
