@@ -1,5 +1,6 @@
 <template>
   <div class="PostList">
+    <!-- <pre>{{ posts }}</pre> -->
     <el-row :gutter="20">
       <el-col :md="8" v-for="post in posts" :key="post.id">
         <router-link :to="`/post/${post.slug}`">
@@ -12,7 +13,7 @@
 
 <script>
 import PostItem from '@/components/PostItem'
-import axios from 'axios'
+import http from '@/http'
 
 export default {
   name: 'PostList',
@@ -26,17 +27,26 @@ export default {
   }),
 
   mounted() {
-    this.getPosts()
+    this.fetchData()
   },
 
   methods: {
-    getPosts() {
-      axios.get('http://localhost:3000/posts')
-        .then((response) => {
-          this.posts = response.data
-        })
-        // .catch((error) => console.log(error))
+    async fetchData() {
+      const params = {}
+      const res = await http.get('post?inflators=user', params)
+
+      if (res) {
+        // eslint-disable-next-line
+        console.log(res)
+        this.posts = res.data.data.posts
+      }
     },
   },
 }
 </script>
+
+<style>
+.PostList {
+  margin-bottom: 20px;
+}
+</style>

@@ -2,7 +2,9 @@
   <div id="app">
     <header-bar></header-bar>
 
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view :key="$route.fullPath"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -43,5 +45,9 @@ html, body {
 a {
   text-decoration: none;
   color: var(--color-black);
+}
+
+.is-disabled {
+  opacity: .6;
 }
 </style>

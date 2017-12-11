@@ -3,7 +3,7 @@
     <div class="PostItem-image" :style="{ 'background-image': 'url(' + randomImage + ')' }"></div>
 
     <div class="PostItem-body">
-      <h2 class="PostItem-title" v-text="formatText(post.title, 30)"></h2>
+      <h2 class="PostItem-title" v-text="formatText(post.title, 20)"></h2>
       <div class="PostItem-content" v-html="formatText(post.description, 30)"></div>
     </div>
 
@@ -13,7 +13,7 @@
           <div class="PostItem-userAvatar" style="background-image: url(/static/img/avatar.png);"></div>
         </div>
         <div class="PostItem-meta-item">
-          <div class="PostItem-userName" v-text="`${post.author_user.first_name} ${post.author_user.last_name}`"></div>
+          <div class="PostItem-userName" v-text="`${post.user.first_name} ${post.user.last_name}`"></div>
           <div class="PostItem-date" v-text="formatDate(post.created_dt)"></div>
         </div>
       </div>

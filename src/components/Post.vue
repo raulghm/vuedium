@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import http from '@/http'
 
 export default {
   name: 'Post',
@@ -22,19 +22,23 @@ export default {
   }),
 
   created() {
-    this.getPost()
+    this.fetchData()
+
+    this.$store.commit('setHeaderAlt', true)
+    this.$store.commit('setEdit', true)
   },
 
   methods: {
-    getPost() {
-      axios.get('http://localhost:3000/posts?id=1&slug=el-mejor-post')
-        .then((response) => {
-          this.post = response.data[0]
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.log(error)
-        })
+    async fetchData() {
+      const params = {
+      }
+
+      const res = await http.get(`post/${this.$route.params.postSlug}`, params)
+      if (res) {
+        // eslint-disable-next-line
+        console.log(res)
+        this.post = res.data.data.post
+      }
     },
   },
 }
