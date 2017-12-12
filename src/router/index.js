@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PostList from '@/components/PostList'
 import Post from '@/components/Post'
-import NewPost from '@/components/NewPost'
+import PostNew from '@/components/PostNew'
 import PostEdit from '@/components/PostEdit'
 
 Vue.use(Router)
@@ -28,8 +28,8 @@ export default new Router({
     },
     {
       path: '/new-story',
-      name: 'newPost',
-      component: NewPost,
+      name: 'postNew',
+      component: PostNew,
     },
   ],
 })

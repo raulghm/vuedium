@@ -23,6 +23,7 @@ const vm = new Vue({
 router.beforeEach((to, from, next) => {
   vm.$store.commit('setHeaderAlt', false)
   vm.$store.commit('setPublishing', false)
-  vm.$store.commit('setEdit', false)
+  vm.$store.commit('setEditing', false)
+  vm.$store.commit('setSaving', false)
   next()
 })

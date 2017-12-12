@@ -1,24 +1,16 @@
-/* eslint-disable */
-
 import axios from 'axios'
-import qs from 'qs'
 
-axios.defaults.baseURL = 'http://104.131.0.127:8080';
+axios.defaults.baseURL = 'https://104.131.0.127/vuedium'
 
-axios.interceptors.request.use(config => {
-  // loading
-  return config
-}, error => {
-  return Promise.reject(error)
-})
+axios.interceptors.request.use(
+  config => config,
+  error => Promise.reject(error))
 
-axios.interceptors.response.use(response => {
-  return response
-}, error => {
-  return Promise.resolve(error.response)
-})
+axios.interceptors.response.use(
+  response => response,
+  error => Promise.resolve(error.response))
 
-function checkStatus (response) {
+function checkStatus(response) {
   // loading
   if (response && (
       response.status === 200 ||
@@ -32,11 +24,11 @@ function checkStatus (response) {
   // Under abnormal conditions, the error message is returned
   return {
     status: -404,
-    msg: 'error'
+    msg: 'error',
   }
 }
 
-function checkCode (res) {
+function checkCode(res) {
   // if the code is abnormal (here include network error, server error, back end throw error),
   // you can pop up an error message to tell the user
   if (res.status === -404) {
@@ -53,42 +45,30 @@ export default {
     return axios({
       method: 'post',
       url,
-      data: data,
+      data,
       timeout: 10000,
       headers: {
         'content-type': 'application/json',
-        'x-access-token': 'accesstokenvuedium'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
+        'x-access-token': 'accesstokenvuedium',
+      },
+    })
+    .then(response => checkStatus(response))
+    .then(res => checkCode(res))
   },
 
   patch(url, data) {
     return axios({
-      method: 'post',
+      method: 'patch',
       url,
-      data: data,
+      data,
       timeout: 10000,
       headers: {
         'content-type': 'application/json',
-        'x-access-token': 'accesstokenvuedium'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
+        'x-access-token': 'accesstokenvuedium',
+      },
+    })
+    .then(response => checkStatus(response))
+    .then(res => checkCode(res))
   },
 
   get(url, params) {
@@ -98,16 +78,10 @@ export default {
       params, // get Request with the parameters
       timeout: 10000,
       headers: {
-        'content-type': 'application/json'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
-  }
+        'content-type': 'application/json',
+      },
+    })
+    .then(response => checkStatus(response))
+    .then(res => checkCode(res))
+  },
 }

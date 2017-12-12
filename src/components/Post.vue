@@ -23,20 +23,15 @@ export default {
 
   created() {
     this.fetchData()
-
     this.$store.commit('setHeaderAlt', true)
-    this.$store.commit('setEdit', true)
+    this.$store.commit('setEditing', true)
   },
 
   methods: {
     async fetchData() {
-      const params = {
-      }
-
+      const params = {}
       const res = await http.get(`post/${this.$route.params.postSlug}`, params)
       if (res) {
-        // eslint-disable-next-line
-        console.log(res)
         this.post = res.data.data.post
       }
     },

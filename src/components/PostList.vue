@@ -1,6 +1,5 @@
 <template>
   <div class="PostList">
-    <!-- <pre>{{ posts }}</pre> -->
     <el-row :gutter="20">
       <el-col :md="8" v-for="post in posts" :key="post.id">
         <router-link :to="`/post/${post.slug}`">
@@ -36,8 +35,6 @@ export default {
       const res = await http.get('post?inflators=user', params)
 
       if (res) {
-        // eslint-disable-next-line
-        console.log(res)
         this.posts = res.data.data.posts
       }
     },

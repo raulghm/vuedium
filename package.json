@@ -15,7 +15,6 @@
     "element-ui": "^2.0.7",
     "luxon": "^0.2.7",
     "normalize.css": "^7.0.0",
-    "qs": "^6.5.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

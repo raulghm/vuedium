@@ -25,7 +25,7 @@
 import http from '@/http'
 
 export default {
-  name: 'NewPost',
+  name: 'PostNew',
 
   data: () => ({
     title: '',
@@ -45,9 +45,6 @@ export default {
 
   watch: {
     publishDone() {
-      // eslint-disable-next-line
-      console.log(this.publishDone)
-
       if (this.publishDone === true) {
         this.publish()
       }
@@ -72,10 +69,7 @@ export default {
       const res = await http.post('post', params)
 
       if (res) {
-        // eslint-disable-next-line
-        console.log(res)
-
-        if (res.data.success === true) {
+        if (res.data && res.data.success === true) {
           this.$message('Historia agregada correctamente')
 
           this.$router.push({
@@ -85,6 +79,8 @@ export default {
             },
           })
         }
+      } else {
+        this.$message('Hubo un error al guardar')
       }
     },
   },

@@ -10,12 +10,11 @@ export default new Vuex.Store({
     headerAlt: false,
     publishReady: false,
     publishDone: false,
-    publising: false,
-    edit: false,
+    publishing: false,
+    editing: false,
     saveReady: false,
     saveDone: false,
     saving: false,
-    save: false,
   },
 
   mutations: {
@@ -31,8 +30,17 @@ export default new Vuex.Store({
     setPublishing(state, value) {
       state.publishing = value
     },
-    setEdit(state, value) {
-      state.edit = value
+    setEditing(state, value) {
+      state.editing = value
+    },
+    setSaveReady(state, value) {
+      state.saveReady = value
+    },
+    setSaveDone(state, value) {
+      state.saveDone = value
+    },
+    setSaving(state, value) {
+      state.saving = value
     },
   },
 })

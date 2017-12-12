@@ -14,12 +14,12 @@
         :disabled="!$store.state.publishReady"
         @click="setPublishDone()"
         :class="{ 'is-disabled': !$store.state.publishReady }"
-        v-show="$store.state.publishing"
+        v-if="$store.state.publishing"
       >Publish</el-button>
 
       <router-link
         :to="{ name: 'postEdit', params: { postSlug: $route.params.postSlug } }"
-        v-show="$store.state.edit"
+        v-if="$store.state.editing"
       >
         <el-button
           type="text"
@@ -31,7 +31,7 @@
         :disabled="!$store.state.saveReady"
         @click="setSaveDone()"
         :class="{ 'is-disabled': !$store.state.saveReady }"
-        v-show="$store.state.save"
+        v-if="$store.state.saving"
       >Save</el-button>
     </div>
 
@@ -62,9 +62,13 @@ export default {
       this.$store.commit('setPublishDone', true)
     },
 
+    setSaveDone() {
+      this.$store.commit('setSaveDone', true)
+    },
+
     handleCommand(command) {
       if (command === 'a') {
-        this.$router.push({ name: 'newPost' })
+        this.$router.push({ name: 'postNew' })
       }
     },
   },
@@ -128,6 +132,6 @@ export default {
 .HeaderBar-post {
   position: absolute;
   top: 14px;
-  right: 100px;
+  right: 90px;
 }
 </style>

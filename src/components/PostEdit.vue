@@ -30,10 +30,12 @@ export default {
   data: () => ({
     title: '',
     description: '',
+    slug: '',
   }),
 
   created() {
     this.$store.commit('setHeaderAlt', true)
+    this.$store.commit('setSaving', true)
     this.fetchData()
   },
 
@@ -45,9 +47,6 @@ export default {
 
   watch: {
     saveDone() {
-      // eslint-disable-next-line
-      console.log(this.saveDone)
-
       if (this.saveDone === true) {
         this.save()
       }
@@ -56,10 +55,10 @@ export default {
 
   methods: {
     saveReady() {
-      if (this.title.length > 0 && this.content.length > 0) {
-        this.$store.commit('setPublishReady', true)
+      if (this.title.length > 0 && this.description.length > 0) {
+        this.$store.commit('setSaveReady', true)
       } else {
-        this.$store.commit('setPublishReady', false)
+        this.$store.commit('setSaveReady', false)
       }
     },
 
@@ -69,38 +68,31 @@ export default {
 
       const res = await http.get(`post/${this.$route.params.postSlug}`, params)
       if (res) {
-        // eslint-disable-next-line
-        console.log(res)
         this.title = res.data.data.post.title
         this.description = res.data.data.post.description
+        this.slug = res.data.data.post.slug
       }
     },
 
     async save() {
       const params = {
-        slug: 'foo1',
         title: this.title,
-        description: this.content,
-        created_dt: '2017-12-12 15:00:00',
-        user: {
-          first_name: 'Juan',
-          last_name: 'Perez',
-          email: 'jperez@email.com',
-          created_dt: '2017-12-12 15:00:00',
-        },
+        description: this.description,
       }
 
-      const res = await http.post('posts', params)
+      const res = await http.patch(`post/${this.slug}`, params)
 
       if (res) {
-        // eslint-disable-next-line
-        console.log(res)
+        if (res.data && res.data.success === true) {
+          this.$store.commit('setSaveDone', false)
+          this.$store.commit('setSaveReady', false)
 
-        if (res.status === 201) {
+          this.$message('Historia editada correctamente')
+
           this.$router.push({
             name: 'post',
             params: {
-              postSlug: res.data.slug,
+              postSlug: res.data.data.post.slug,
             },
           })
         }
