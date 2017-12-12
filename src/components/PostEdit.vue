@@ -1,30 +1,34 @@
 <template>
   <div class="Post-body">
-    <user
-      v-if="user"
-      :user="user"
-      :post-date="created_dt"
-      type="lg"
-    ></user>
+    <div v-if="loading">Cargando</div>
 
-    <input
-      type="text"
-      class="Input Input--title"
-      placeholder="Title"
-      v-model="title"
-      autofocus="true"
-      @keyup="saveReady()"
-    >
+    <div class="Post-edit" v-if="!loading">
+      <user
+        v-if="user"
+        :user="user"
+        :post-date="created_dt"
+        type="lg"
+      ></user>
 
-    <textarea
-      placeholder="Tell your story..."
-      class="Input Input--content"
-      name="description"
-      cols="30"
-      rows="10"
-      v-model="description"
-      @keyup="saveReady()"
-    ></textarea>
+      <input
+        type="text"
+        class="Input Input--title"
+        placeholder="Title"
+        v-model="title"
+        autofocus="true"
+        @keyup="saveReady()"
+      >
+
+      <textarea
+        placeholder="Tell your story..."
+        class="Input Input--content"
+        name="description"
+        cols="30"
+        rows="10"
+        v-model="description"
+        @keyup="saveReady()"
+      ></textarea>
+    </div>
   </div>
 </template>
 
@@ -45,6 +49,7 @@ export default {
     slug: '',
     user: null,
     created_dt: '',
+    loading: true,
   }),
 
   created() {
@@ -77,9 +82,7 @@ export default {
     },
 
     async fetchData() {
-      const params = {
-      }
-
+      const params = {}
       const res = await http.get(`post/${this.$route.params.postSlug}?inflators=user`, params)
 
       if (res) {
@@ -88,6 +91,7 @@ export default {
         this.slug = res.data.data.post.slug
         this.created_dt = res.data.data.post.created_dt
         this.user = res.data.data.post.user
+        this.loading = false
       }
     },
 
