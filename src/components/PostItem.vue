@@ -60,7 +60,7 @@ export default {
 
   methods: {
     formatDate(date) {
-      return DateTime.fromString(date, 'yyyy-MM-dd hh:mm:ss').toLocaleString({ month: 'short', day: 'numeric' })
+      return DateTime.fromISO(date).toLocaleString({ month: 'short', day: 'numeric' })
     },
 
     formatText(str, max) {
