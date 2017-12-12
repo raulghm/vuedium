@@ -19,10 +19,17 @@ yarn run build
 # build for production and view the bundle analyzer report
 yarn run build --report
 ```
+## Features
+
+* Vue 2.x
+* Vue Router
+* Vuex
+* element-ui
+* axios
 
 ## WIP
 
 * [x] List posts
-* [ ] Create post
-* [ ] Edit post
+* [x] Create post
+* [x] Edit post
 * [ ] Delete post
