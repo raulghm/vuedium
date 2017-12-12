@@ -20,10 +20,8 @@ const vm = new Vue({
   components: { App },
 })
 
-router.beforeEach((to, from, next) => {
-  vm.$store.commit('setHeaderAlt', false)
+router.afterEach(() => {
   vm.$store.commit('setPublishing', false)
   vm.$store.commit('setEditing', false)
   vm.$store.commit('setSaving', false)
-  next()
 })

@@ -23,6 +23,7 @@
 
 <script>
 import http from '@/http'
+import User from '@/components/ui/User'
 
 export default {
   name: 'PostNew',
@@ -31,6 +32,10 @@ export default {
     title: '',
     content: '',
   }),
+
+  components: {
+    User,
+  },
 
   created() {
     this.$store.commit('setHeaderAlt', true)
@@ -69,6 +74,12 @@ export default {
       const res = await http.post('post', params)
 
       if (res) {
+        if (res.status === -404) {
+          this.$message('El titulo ingresado ya existe, prueba con otro')
+          this.$store.commit('setPublishReady', false)
+          this.$store.commit('setPublishDone', false)
+        }
+
         if (res.data && res.data.success === true) {
           this.$message('Historia agregada correctamente')
 

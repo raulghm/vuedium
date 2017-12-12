@@ -4,8 +4,21 @@
       <i v-if="!post">Cargando...</i>
 
       <template v-if="post">
-        <h1 class="Post-title" v-text="post.title"></h1>
-        <div class="Post-content" v-html="post.description"></div>
+        <user
+          :user="post.user"
+          :post-date="post.created_dt"
+          type="lg"
+        ></user>
+
+        <h1
+          class="Post-title"
+          v-text="post.title"
+        ></h1>
+
+        <div
+          class="Post-content"
+          v-html="post.description"
+        ></div>
       </template>
     </div>
   </div>
@@ -13,6 +26,7 @@
 
 <script>
 import http from '@/http'
+import User from '@/components/ui/User'
 
 export default {
   name: 'Post',
@@ -20,6 +34,10 @@ export default {
   data: () => ({
     post: null,
   }),
+
+  components: {
+    User,
+  },
 
   created() {
     this.fetchData()
@@ -30,7 +48,7 @@ export default {
   methods: {
     async fetchData() {
       const params = {}
-      const res = await http.get(`post/${this.$route.params.postSlug}`, params)
+      const res = await http.get(`post/${this.$route.params.postSlug}?inflators=user`, params)
       if (res) {
         this.post = res.data.data.post
       }

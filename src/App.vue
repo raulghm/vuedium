@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <header-bar></header-bar>
 
-    <transition name="fade" mode="out-in">
-      <router-view :key="$route.fullPath"></router-view>
-    </transition>
+    <div class="App">
+      <div class="App-content">
+        <header-bar></header-bar>
+
+        <transition name="fade" mode="out-in">
+          <router-view class="App-view"></router-view>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HeaderBar from '@/components/HeaderBar'
+import HeaderBar from '@/components/ui/HeaderBar'
 
 export default {
   name: 'app',
@@ -36,10 +41,14 @@ html, body {
   color: var(--color-black);
 }
 
-#app {
+.App-content {
   padding: 0 20px;
   max-width: 900px;
   margin: 0 auto;
+}
+
+.App-view {
+  position: relative;
 }
 
 a {
@@ -49,5 +58,16 @@ a {
 
 .is-disabled {
   opacity: .6;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s .2s ease;
+  opacity: 1;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

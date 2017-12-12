@@ -4,25 +4,19 @@
 
     <div class="PostItem-body">
       <h2 class="PostItem-title" v-text="formatText(post.title, 20)"></h2>
-      <div class="PostItem-content" v-html="formatText(post.description, 30)"></div>
+      <div class="PostItem-content" v-html="formatText(post.description, 26)"></div>
     </div>
 
     <div class="PostItem-bottom">
       <div class="PostItem-meta">
-        <div class="PostItem-meta-item">
-          <div class="PostItem-userAvatar" style="background-image: url(/static/img/avatar.png);"></div>
-        </div>
-        <div class="PostItem-meta-item">
-          <div class="PostItem-userName" v-text="`${post.user.first_name} ${post.user.last_name}`"></div>
-          <div class="PostItem-date" v-text="formatDate(post.created_dt)"></div>
-        </div>
+        <user :user="post.user" :post-date="post.created_dt"></user>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { DateTime } from 'luxon'
+import User from '@/components/ui/User'
 
 export default {
   name: 'PostItem',
@@ -32,6 +26,10 @@ export default {
       type: Object,
       required: true,
     },
+  },
+
+  components: {
+    User,
   },
 
   data: () => ({
@@ -59,13 +57,10 @@ export default {
   },
 
   methods: {
-    formatDate(date) {
-      return DateTime.fromISO(date).toLocaleString({ month: 'short', day: 'numeric' })
-    },
-
     formatText(str, max) {
-      const result = str.replace(/<(?:.|\n)*?>/gm, '').substr(0, max)
-      return `${result}...`
+      let result = str.replace(/<(?:.|\n)*?>/gm, '')
+      result = result.length > max ? `${result.substr(0, max)}...` : result
+      return result
     },
   },
 }
@@ -101,31 +96,5 @@ export default {
 
 .PostItem-bottom {
   padding: 0 20px 20px 20px;
-}
-
-.PostItem-userAvatar {
-  background-size: cover;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.PostItem-meta-item {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 4px;
-  font-size: .9rem;
-}
-
-.PostItem-userName {
-  margin-top: 2px;
-}
-
-.PostItem-date {
-  margin-top: 2px;
-  color: #bbb;
-  font-size: .8rem;
 }
 </style>

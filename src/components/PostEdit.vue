@@ -1,5 +1,12 @@
 <template>
   <div class="Post-body">
+    <user
+      v-if="user"
+      :user="user"
+      :post-date="created_dt"
+      type="lg"
+    ></user>
+
     <input
       type="text"
       class="Input Input--title"
@@ -23,14 +30,21 @@
 
 <script>
 import http from '@/http'
+import User from '@/components/ui/User'
 
 export default {
   name: 'NewPost',
+
+  components: {
+    User,
+  },
 
   data: () => ({
     title: '',
     description: '',
     slug: '',
+    user: null,
+    created_dt: '',
   }),
 
   created() {
@@ -66,11 +80,14 @@ export default {
       const params = {
       }
 
-      const res = await http.get(`post/${this.$route.params.postSlug}`, params)
+      const res = await http.get(`post/${this.$route.params.postSlug}?inflators=user`, params)
+
       if (res) {
         this.title = res.data.data.post.title
         this.description = res.data.data.post.description
         this.slug = res.data.data.post.slug
+        this.created_dt = res.data.data.post.created_dt
+        this.user = res.data.data.post.user
       }
     },
 
@@ -119,6 +136,7 @@ export default {
   font-size: 2.4rem;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-weight: 600;
+  margin-top: 20px;
 }
 
 .Input--content {

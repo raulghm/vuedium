@@ -26,6 +26,7 @@ export default {
   }),
 
   mounted() {
+    this.$store.commit('setHeaderAlt', false)
     this.fetchData()
   },
 
